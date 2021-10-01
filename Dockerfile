@@ -24,6 +24,6 @@ RUN wget ${TERRAFORM_URL} \
 
 RUN terraform --version
 
-USER 1001
+# USER 1001
 
 CMD ["echo", "This is a 'Purpose Built Image', It is not meant to be ran directly"]

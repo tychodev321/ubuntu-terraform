@@ -12,7 +12,6 @@ ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/
 RUN microdnf update -y \
     && microdnf install -y unzip \
     && microdnf install -y wget \
-    && microdnf install -y gzip \
     && microdnf clean all \
     && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
 

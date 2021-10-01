@@ -22,8 +22,8 @@ RUN wget ${TERRAFORM_URL} \
     && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && mv terraform /usr/bin/terraform
 
-USER 1001
-
 RUN terraform --version
+
+USER 1001
 
 CMD ["echo", "This is a 'Purpose Built Image', It is not meant to be ran directly"]

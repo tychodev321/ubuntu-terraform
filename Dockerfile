@@ -12,6 +12,7 @@ ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/
 RUN microdnf update -y \
     && microdnf install -y unzip \
     && microdnf install -y wget \
+    && microdnf install -y git \
     && microdnf clean all \
     && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
 
@@ -21,7 +22,7 @@ RUN wget ${TERRAFORM_URL} \
     && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && mv terraform /usr/bin/terraform
 
-RUN terraform --version
+RUN terraform --version && git --version
 
 # USER 1001
 

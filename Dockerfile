@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4
 # FROM redhat/ubi8/ubi-minimal:8.4
 
-LABEL maintainer="TychoDev <cloud.ops@tychodev.com>"
+LABEL maintainer=""
 
 ENV TERRAFORM_VERSION=1.0.8
 ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 

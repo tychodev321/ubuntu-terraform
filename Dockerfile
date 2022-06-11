@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.0.0
 
 LABEL maintainer=""
 
-ENV TERRAFORM_VERSION=1.0.8
+ENV TERRAFORM_VERSION=1.2.2
 ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
 
 # MicroDNF is recommended over YUM for Building Container Images

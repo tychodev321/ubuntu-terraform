@@ -6,6 +6,13 @@ LABEL maintainer=""
 ENV TERRAFORM_VERSION=1.2.2
 ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
 
+ENV AWSCLI_VERSION=2.7.7
+ENV AWSCLI_URL=https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWSCLI_VERSION}.zip
+
+ENV KUBECTL_VERSION=v1.24.1
+ENV KUBECTL_URL=https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+ENV KUBECTL_CHECKSUM_URL=https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256
+
 # MicroDNF is recommended over YUM for Building Container Images
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
 
@@ -22,7 +29,23 @@ RUN wget ${TERRAFORM_URL} \
     && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && mv terraform /usr/bin/terraform
 
-RUN terraform --version && git --version
+# Download and install AWS CLI
+RUN curl ${AWSCLI_URL} -o "awscliv2.zip" \ 
+    && unzip awscliv2.zip \
+    && ./aws/install -i /usr/local -b /usr/local/bin -u \
+    && rm  -rf awscliv2.zip awscliv2
+
+# Download and install Kubectl
+RUN curl -LO "${KUBECTL_URL}" \
+    && curl -LO "${KUBECTL_CHECKSUM_URL}" \
+    && echo "$(<kubectl.sha256) kubectl" | sha256sum --check \
+    && chmod +x kubectl \
+    && mv ./kubectl /usr/bin//kubectl
+
+RUN terraform --version \
+    && aws --version \
+    && kubectl version --client \
+    && git --version
 
 # USER 1001
 

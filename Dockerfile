@@ -42,12 +42,13 @@ RUN curl -LO "${KUBECTL_URL}" \
     && chmod +x kubectl \
     && mv ./kubectl /usr/bin//kubectl
 
-RUN echo "terraform version: $(terraform --version)" \
+RUN echo "terraform version: $(terraform --version | head -n 1)" \
     && echo "aws version: $(aws --version)" \
-    && echo "kubectl version: $(kubectl version --client)" \
     && echo "wget version: $(wget --version | head -n 1)" \
     && echo "unzip version: $(unzip -v | head -n 1)" \
-    && echo "git version: $(git --version)"
+    && echo "git version: $(git --version)" \
+    && echo "kubectl version: $(kubectl version --client)"
+
 
 USER 1001
 

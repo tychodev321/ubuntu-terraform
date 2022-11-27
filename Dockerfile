@@ -47,7 +47,8 @@ RUN echo "terraform version: $(terraform --version | head -n 1)" \
     && echo "wget version: $(wget --version | head -n 1)" \
     && echo "unzip version: $(unzip -v | head -n 1)" \
     && echo "git version: $(git --version)" \
-    && echo "kubectl version: $(kubectl version --client)"
+    && echo "kubectl version: $(kubectl version --client)" \
+    && microdnf repolist
 
 USER 1001
 

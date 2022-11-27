@@ -49,7 +49,6 @@ RUN echo "terraform version: $(terraform --version | head -n 1)" \
     && echo "git version: $(git --version)" \
     && echo "kubectl version: $(kubectl version --client)"
 
-
 USER 1001
 
 CMD ["echo", "This is a 'Purpose Built Image', It is not meant to be ran directly"]

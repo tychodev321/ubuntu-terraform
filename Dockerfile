@@ -3,15 +3,15 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.0.0
 
 LABEL maintainer=""
 
-ENV TERRAFORM_VERSION=1.2.2
+ENV TERRAFORM_VERSION=1.3.5
 ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
 
-ENV AWSCLI_VERSION=2.7.7
+ENV AWSCLI_VERSION=2.9.1
 ENV AWSCLI_URL=https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWSCLI_VERSION}.zip
 
-ENV KUBECTL_VERSION=v1.24.1
-ENV KUBECTL_URL=https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-ENV KUBECTL_CHECKSUM_URL=https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256
+ENV KUBECTL_VERSION=1.25.4
+ENV KUBECTL_URL=https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+ENV KUBECTL_CHECKSUM_URL=https://dl.k8s.io/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256
 
 # MicroDNF is recommended over YUM for Building Container Images
 # https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
@@ -42,11 +42,13 @@ RUN curl -LO "${KUBECTL_URL}" \
     && chmod +x kubectl \
     && mv ./kubectl /usr/bin//kubectl
 
-RUN terraform --version \
-    && aws --version \
-    && kubectl version --client \
-    && git --version
+RUN echo "terraform version: $(terraform --version)" \
+    && echo "aws version: $(aws --version)" \
+    && echo "kubectl version: $(kubectl version --client)" \
+    && echo "wget version: $(wget --version | head -n 1)" \
+    && echo "unzip version: $(unzip -v | head -n 1)" \
+    && echo "git version: $(git --version)"
 
-# USER 1001
+USER 1001
 
 CMD ["echo", "This is a 'Purpose Built Image', It is not meant to be ran directly"]

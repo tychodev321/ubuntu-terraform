@@ -43,7 +43,7 @@ RUN curl -LO "${KUBECTL_URL}" \
     && mv ./kubectl /usr/bin//kubectl
 
 RUN echo "terraform version: $(terraform --version | head -n 1)" \
-    && echo "aws version: $(aws --version)" \
+    && echo "aws-cli version: $(aws --version)" \
     && echo "wget version: $(wget --version | head -n 1)" \
     && echo "unzip version: $(unzip -v | head -n 1)" \
     && echo "git version: $(git --version)" \

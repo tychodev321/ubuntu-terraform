@@ -1,1 +1,1 @@
-# ubi-terraform
+# ubuntu-terraform

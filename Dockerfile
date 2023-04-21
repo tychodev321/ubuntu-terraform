@@ -1,5 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal:9.0.0
-# FROM redhat/ubi9/ubi-minimal:9.0.0
+FROM ubuntu:22.10
 
 LABEL maintainer=""
 
@@ -13,15 +12,14 @@ ENV KUBECTL_VERSION=1.25.4
 ENV KUBECTL_URL=https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 ENV KUBECTL_CHECKSUM_URL=https://dl.k8s.io/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256
 
-# MicroDNF is recommended over YUM for Building Container Images
-# https://www.redhat.com/en/blog/introducing-red-hat-enterprise-linux-atomic-base-image
-
-RUN microdnf update -y \
-    && microdnf install -y unzip \
-    && microdnf install -y wget \
-    && microdnf install -y git \
-    && microdnf clean all \
-    && rm -rf /var/cache/* /var/log/dnf* /var/log/yum.*
+RUN apt update -y && apt upgrade -y \
+    && apt install -y unzip \
+    && apt install -y wget \
+    && apt install -y wget \
+    && apt install -y git \
+    && apt install -y curl \
+    && apt clean -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Download and install Terraform
 RUN wget ${TERRAFORM_URL} \ 
@@ -47,8 +45,7 @@ RUN echo "terraform version: $(terraform --version | head -n 1)" \
     && echo "wget version: $(wget --version | head -n 1)" \
     && echo "unzip version: $(unzip -v | head -n 1)" \
     && echo "git version: $(git --version)" \
-    && echo "kubectl version: $(kubectl version --client)" \
-    && microdnf repolist
+    && echo "kubectl version: $(kubectl version --client)"
 
 # USER 1001
 
